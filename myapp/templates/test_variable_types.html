@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Variable types</title>
+</head>
+<body>
+    <h3>Variable Types: dict, list, instance, class</h3>
+    <p>mydict["key"] = {{ mydict["key"] }}</p>
+    <p>mylist[3] = {{ mylist[3] }}</p>
+    <p>mylist[myintvar](myintvar={{ myintvar }}) = {{ mylist[myintvar] }}</p>
+    <p>instance.method1() = {{ instance.method1() }}</p>
+    <p>instance.method2() = {{ instance.method2() }}</p>
+    <p>instance.method3(5) = {{ instance.method3(5) }}</p>
+    <p>class.method2() = {{ class.method2() }}</p>
+    <p>class.method3(10) = {{ class.method3(10) }}</p>
+
+    <h3>Jinja2 does not support all python syntax</h3>
+    <p>mylist length: { { len(mylist) } } <-- not work</p>
+
+    <h3>Variables can be modified with filters(pi>pe character as separator)</h3>
+    <p>mylist length: {{ mylist|length }}</p>
+    <p>code: {{ code }}</p>
+    <p>code|safe: {{ code|safe }}</p>
+    <p>code|striptags: {{ code|striptags }}</p>
+    <h4>-- Common filters</h4>
+    <ul>safe: Renders the value without applying escaping</ul>
+    <ul>capitalize: Converts the first character of the value to uppercase and the rest to lowercase</ul>
+    <ul>lower: Converts the value to lowercase characters</ul>
+    <ul>upper: Converts the value to uppercase characters</ul>
+    <ul><b>title</b>: Capitalizes each word in the value</ul>
+    <ul>trim: Removes leading and trailing whitespace from the value</ul>
+    <ul>striptags: Removes any HTML tags from the value before rendering</ul>
+</body>
+</html>
