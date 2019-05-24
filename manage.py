@@ -1,8 +1,10 @@
 from flask_script import Manager, Command, Server
-from myapp import app
-
+from flask_bootstrap import Bootstrap
+from myapp.hello_templates import app
 
 manager = Manager(app)
+bootstrap = Bootstrap(manager.app)
+
 manager.add_command("runserver", Server(host="0.0.0.0", port=5566))
 
 

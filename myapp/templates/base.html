@@ -1,0 +1,14 @@
+<!--templates/base.html -->
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+    {% block page_tilte %}{% endblock %} - My Application
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% block page_content %}{% endblock %}
+    </div>
+    {% include "footer.html" %}
+{% endblock %}
+

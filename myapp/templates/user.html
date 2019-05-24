@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+<!-- templates/user.html -->
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to Your Personal Page</title>
+    <title>User Page with if...else...</title>
 </head>
 <body>
-    <h1>Hello, {{ name }}!</h1>
+    {% if name %}
+        <h1>Hello, {{ name |title }}!</h1>
+    {% else %}
+        <h1>Hello, Stranger!</h1>
+    {% endif %}
 </body>
 </html>

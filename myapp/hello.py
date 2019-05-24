@@ -21,10 +21,13 @@ def get_statistic():
 
 @app.route("/")
 def index():
+    """
+    http://127.0.0.1:5000/?name=<name>
+    :return:
+    """
     user_argent = request.headers.get("User-Agent")
     user_name = request.args.get("name")
-    # return "<h1>Hello World</h1>"
-    # "127.0.0.1:5000/?name=<name>"
+
     return f"<p>Your browser is {user_argent}</p>" \
         f"<p>Your name is {user_name}</p>"
 
@@ -52,7 +55,6 @@ def has_cookie():
     # response = make_response(data)
     # response.set_cookie("answer", "42")
     # return response
-
     headers = {}
     headers["Set-Cookie"] = "answer=45"
     return Response(data, headers=headers)
@@ -63,29 +65,15 @@ def error():
     raise RuntimeError
 
 
-#
-# @app.route("/users")
-# def get_users():
-#     users = ["Maomao", "Alicia"]
-#     resp = ["<p>{}</p>".format(user) for user in users]
-#     resp = "\n".join(resp)
-#
-#     return resp
-
-# ## Dynamic website ##
-# @app.route("/user/<name>")
-# def get_user_name(name):
-#     return "<h1>Hello, {}!</h1>".format(name)
-#
-#
-
 def load_user(uid):
     try:
         uid = int(uid)
         if uid == 1:
-            return "Maomao"
+            return "Vansan"
         elif uid == 2:
-            return "Alicia"
+            return "Veronica"
+        elif uid == 3:
+            return "Vicky"
     except BaseException:
         return
 
@@ -102,9 +90,9 @@ def get_user_id(uid):
         return f"<h1>Hello, {user}!</h1>"
 
 
-# @app.route("/user/<path:path>")
-# def get_user_path(path):
-#     return "<h1>Path: {}</h1>".format(path)
+@app.route("/user/<path:path>")
+def get_user_path(path):
+    return "<h1>Path: {}</h1>".format(path)
 
 
 if __name__ == "__main__":
