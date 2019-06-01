@@ -1,12 +1,13 @@
-# flask_web (Unfinish Readme)
-A simple implementaion with Flask API in Python.
-(INTRODUCTION HERE!!!)
+# Flask API Implementation
+> updated at 2019/06/01
+- A simple implementaion with Flask API in Python.
+- (INTRODUCTION HERE!!!)
 
-## P01 Basic Introduction
-> /myapp/hello.py
+## Practice 01. Basic Introduction
 ```
 pip install flask
 ```
+> /myapp/hello.py
 - Setting
   - debug=True    # backend update your code while server is running
   - threaded=True  # Try it yourself!!
@@ -82,7 +83,11 @@ def get_statistic():
       return Response(data, headers=headers)
   ```
   ```
-  
+  @app.route("/no_cookie")
+  def no_cookie():
+      data = "<h1>This document doesn't carry a cookie!</h1>"
+      response = make_response(data)
+      return response
   ```
 - GET request (http://127.0.0.1:xxxx/user?name=[YOUR_NAME])
 ```
@@ -103,13 +108,24 @@ def get_user_with_get():
 (TODO)
 ```
 
-### demo P01
+Demo Practice 01
 ```
 python myapp/hello.py
 ```
+> Statc route: http://127.0.0.1:5000/index
+
+> Dynamic route: http://127.0.0.1:5000/user/Vercaca
+
+> Cookie
+> > With cookie: http://127.0.0.1:5000/has_cookie
+
+> > Without cookie: http://127.0.0.1:5000/no_cookie
+
+> Get Request: http://127.0.0.1:5000/user?name=Vercaca
+
 
 ***
-## P02 Manager
+## Practice 02. Manager
 ```
 pip install flask-script
 ```
@@ -159,31 +175,20 @@ def verify(verified=False):
 manager.run()
 ```
 
-### demo P02
+Demo Practice 02
 ```
 python manage.py hello -n Ver -u Yahoo
-hello, Ver, from Yahoo
 ```
+> hello, Ver, from Yahoo
 
 ***
-## P03 Templates
+## Practice 03. Templates
 - Front-end(The Jinja2 template engine) and Back-end connection
 - flask-bootstrap
 ```
 pip install flask-bootstrap
 ```
-- Back-end connection
-  > /myapp/hello_templates.py
-  ```
-  from flask import render_template
-  app = Flask(__name__, template_folder="templates")
-  app.debug = True
-
-  @app.route("/")
-  def index():
-      return render_template("index.html")
-  ```
-- put your templates (html) into /myapp/templates/
+- Front-end: put your templates (html) into /myapp/templates/
   > /myapp/templates/index.html
   ```
   <html>
@@ -196,31 +201,41 @@ pip install flask-bootstrap
       </body>
   </html>
   ```
-- more usages and variable types can see the codes.
+- Back-end: connection
+  > /myapp/hello_templates.py
+  ```
+  from flask import render_template
+  app = Flask(__name__, template_folder="templates")
+  app.debug = True
 
-### Demo P03
+  @app.route("/")
+  def index():
+      return render_template("index.html")
+  ```
+
+(more usages and variable types can see the codes.)
+
+Demo Practice 03
 ```
 $python manage.py runserver
 ```
+> http://0.0.0.0:5566/
 
 ***
 ## P04 Macro (Like Function)
 - you call write a Macro used in html and call by its names
-> /myapp/templates/macros.html
 Example: 
 
 Customize your macro here
+> /myapp/templates/macros.html
 ```
-<!-- templates/macros.html -->
-
 {% macro render_user(user) %}
     <li>{{ user|title }}</li>
 {% endmacro %}
 ```
-Your Front Page
-> /myapp/templates/macros.html
+Add Macros into your website
+> /myapp/templates/users.html
 ```
-<!-- templates/test.html -->
 {%  import "macros.html" as macros %}
 <body>
   <ul>
@@ -230,6 +245,28 @@ Your Front Page
   </ul>
 </body>
 ```
+Add template route
+> /myapp/hello_templates.py
+```
+@app.route("/users")
+def users():
+    return render_template("users.html", users=registered_users)
+```
+
+> /manage.py
+```
+from myapp.hello_templates import app
+
+manager.add_command("runserver", Server(host="0.0.0.0", port=5566))
+manager.run()
+```
+
+Demo Practice 04
+```
+$python manage.py runserver
+```
+> http://0.0.0.0:5566/users
+
 
 
 ## References
