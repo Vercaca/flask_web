@@ -22,7 +22,17 @@ def get_statistic():
 @app.route("/")
 def index():
     """
-    http://127.0.0.1:5000/?name=<name>
+    http://127.0.0.1:5000/
+    :return:
+    """
+    return "<h1>Hello World!</h1>"
+
+
+# get request
+@app.route("/user")
+def get_user_with_get():
+    """
+    http://127.0.0.1:5000/user?name=<name>
     :return:
     """
     user_argent = request.headers.get("User-Agent")
@@ -75,7 +85,9 @@ def load_user(uid):
         elif uid == 3:
             return "Vicky"
     except BaseException:
-        return
+        return None
+
+# dynamic routes
 
 # ## client error: 4xx , server error: 5xx
 @app.route("/user/<int:uid>")
