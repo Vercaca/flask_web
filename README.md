@@ -4,14 +4,14 @@
 - (INTRODUCTION HERE!!!)
 
 ## Practice 01. Basic Introduction
-```
-pip install flask
+```sh
+$ pip install flask
 ```
 > /myapp/hello.py
 - Setting
   - debug=True    # backend update your code while server is running
   - threaded=True  # Try it yourself!!
-  ```
+  ```Python3
   from flask import Flask
   
   app = Flask(__name__)
@@ -20,7 +20,7 @@ pip install flask
   
 - Static route vs. Dynamic route
   - Static route (http://127.0.0.1:xxxx/index)
-  ```
+  ```Python3
   @app.route("/index")
   def index():
       """
@@ -31,7 +31,7 @@ pip install flask
 
   ```
   - Dynamic route (http://127.0.0.1:xxxx/user/[YOUR_NAME])
-  ```
+  ```Python3
   def load_user(user_name):
     if user_name in users:
         return user_name
@@ -50,13 +50,13 @@ pip install flask
   - default: 200
   - abort (client: 4xx, server: 5xx)
   - redirect: 302
-  ```
+  ```Python3
   @app.route("/302")
   def redirect():
       return "<h1>Redirect</h1>", 302, {"Location": "http://www.google.com"}
   ```
 - Statistics
-```
+```Python3
 statistic_data = {}
 
 @app.before_request
@@ -70,9 +70,9 @@ def get_statistic():
     return f"statistic_data: {statistic_data}"
 
 ```
-- Cookie
-  - Response
-  ```
+- Response with cookie
+  - With Cookie
+  ```Python3
   from flask import Response
   
   @app.route("/has_cookie")
@@ -82,15 +82,16 @@ def get_statistic():
       headers["Set-Cookie"] = "answer=45"
       return Response(data, headers=headers)
   ```
-  ```
+  - Without Cookie
+  ```Python3
   @app.route("/no_cookie")
   def no_cookie():
       data = "<h1>This document doesn't carry a cookie!</h1>"
       response = make_response(data)
       return response
   ```
-- GET request (http://127.0.0.1:xxxx/user?name=[YOUR_NAME])
-```
+- GET request
+```Python3
 """
 http://127.0.0.1:5000/user?name=<name>
 :return:
@@ -104,43 +105,42 @@ def get_user_with_get():
         f"<p>Your name is {user_name}</p>"
 ```
 - POST request
-```
-(TODO)
+```Python3
+## TODO
 ```
 
 Demo Practice 01
-```
+```sh
 python myapp/hello.py
 ```
 > Statc route: http://127.0.0.1:5000/index
 
 > Dynamic route: http://127.0.0.1:5000/user/Vercaca
 
-> Cookie
-> > With cookie: http://127.0.0.1:5000/has_cookie
+> Has cookie: http://127.0.0.1:5000/has_cookie
 
-> > Without cookie: http://127.0.0.1:5000/no_cookie
+> No cookie: http://127.0.0.1:5000/no_cookie
 
 > Get Request: http://127.0.0.1:5000/user?name=Vercaca
 
 
 ***
 ## Practice 02. Manager
-```
-pip install flask-script
+```sh
+$ pip install flask-script
 ```
 #### to manage your Flask app
 > /manage.py
 - runserver
 - assign local url and port
-```
+```Python3
 from flask_script import Manager, Server
 from myapp.hello import app  # import your app
 manager = Manager(app)
 manager.add_command("runserver", Server(host="0.0.0.0", port=5566))
 ```
 - add command / option
-```
+```Python3
 @manager.option('-n', '--name', dest='name', default='joe', help="Your name")
 @manager.option('-u', '--url', dest='url', default=None)
 def hello(name, url):
@@ -171,13 +171,13 @@ def verify(verified=False):
     print(f"VERIFIED? {'Yes' if verified else 'No'}")
 ```
 - run in main
-```
+```Python3
 manager.run()
 ```
 
 Demo Practice 02
-```
-python manage.py hello -n Ver -u Yahoo
+```sh
+$ python manage.py hello -n Ver -u Yahoo
 ```
 > hello, Ver, from Yahoo
 
@@ -185,12 +185,12 @@ python manage.py hello -n Ver -u Yahoo
 ## Practice 03. Templates
 - Front-end(The Jinja2 template engine) and Back-end connection
 - flask-bootstrap
-```
-pip install flask-bootstrap
+```sh
+$ pip install flask-bootstrap
 ```
 - Front-end: put your templates (html) into /myapp/templates/
   > /myapp/templates/index.html
-  ```
+  ```html5
   <html>
       <head>
           <meta charset="UTF-8">
@@ -203,7 +203,7 @@ pip install flask-bootstrap
   ```
 - Back-end: connection
   > /myapp/hello_templates.py
-  ```
+  ```Python3
   from flask import render_template
   app = Flask(__name__, template_folder="templates")
   app.debug = True
@@ -216,8 +216,8 @@ pip install flask-bootstrap
 (more usages and variable types can see the codes.)
 
 Demo Practice 03
-```
-$python manage.py runserver
+```sh
+$ python manage.py runserver
 ```
 > http://0.0.0.0:5566/
 
@@ -228,14 +228,14 @@ Example:
 
 Customize your macro here
 > /myapp/templates/macros.html
-```
+```html
 {% macro render_user(user) %}
     <li>{{ user|title }}</li>
 {% endmacro %}
 ```
 Add Macros into your website
 > /myapp/templates/users.html
-```
+```html
 {%  import "macros.html" as macros %}
 <body>
   <ul>
@@ -247,14 +247,14 @@ Add Macros into your website
 ```
 Add template route
 > /myapp/hello_templates.py
-```
+```Python3
 @app.route("/users")
 def users():
     return render_template("users.html", users=registered_users)
 ```
 
 > /manage.py
-```
+```Python3
 from myapp.hello_templates import app
 
 manager.add_command("runserver", Server(host="0.0.0.0", port=5566))
@@ -262,8 +262,8 @@ manager.run()
 ```
 
 Demo Practice 04
-```
-$python manage.py runserver
+```sh
+$ python manage.py runserver
 ```
 > http://0.0.0.0:5566/users
 
