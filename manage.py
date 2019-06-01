@@ -8,10 +8,10 @@ bootstrap = Bootstrap(manager.app)
 manager.add_command("runserver", Server(host="0.0.0.0", port=5566))
 
 
-class Hello(Command):
-    """prints hello world"""
-    def run(self):
-        print("Hello World!")
+# class Hello(Command):
+#     """prints hello world"""
+#     def run(self):
+#         print("Hello World!")
 
 
 # @manager.command
