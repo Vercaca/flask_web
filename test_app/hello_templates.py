@@ -1,9 +1,20 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__, template_folder="templates")
 app.debug = True
 
 registered_users = ["vansan", "veronica", "vicky"]
+stores = [{
+    'name': 'Elton\'s first store',
+    'items': [{'name': 'my item 1', 'price': 30}],
+    },
+    {
+    'name': 'Elton\'s second store',
+    'items':  [{'name': 'my item 2', 'price': 15}],
+    },
+]
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -15,6 +26,38 @@ def user(name):
     if name not in registered_users:
         name = None
     return render_template("user.html", name=name)
+
+
+"""
+http://127.0.0.1:5000/echo?text=<name>
+:return:
+"""
+@app.route("/echo")
+def get_user_with_get():
+    user_argent = request.headers.get("User-Agent")
+    user_text = request.args.get("text")
+
+    return f"<p>Your browser is {user_argent}</p>" \
+        f"<p>echo: {user_text}</p>"
+
+
+# GET stores
+@app.route("/store")
+def get_stores():
+    return jsonify(stores)
+
+
+# POST /store data: {name :}
+@app.route('/store', methods=['POST'])
+def create_store():
+    request_data = request.get_json()
+    print(request_data)
+    new_store = {
+        'name': request_data['name'],
+        'items': []
+    }
+    stores.append(new_store)
+    return jsonify(new_store)
 
 
 @app.route("/test")
@@ -50,3 +93,4 @@ def test():
 @app.route("/users")
 def users():
     return render_template("users.html", users=registered_users)
+

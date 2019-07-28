@@ -1,0 +1,18 @@
+{
+    "name": "bot_flask_rest",
+    "description": "",
+    "services": [
+        {
+            "type": "endpoint",
+            "appId": "",
+            "appPassword": "",
+            "endpoint": "http://127.0.0.1:5000/api/messages",
+            "id": "322edeb0-b09c-11e9-8fd7-8158e0fde7d5",
+            "name": "http://127.0.0.1:5000/api/messages"
+        }
+    ],
+    "padlock": "",
+    "version": "2.0",
+    "overrides": null,
+    "path": "/Users/Verca/practice/python/20181129_flask/bot_flask_rest.bot"
+}
