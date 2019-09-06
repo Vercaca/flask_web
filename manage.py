@@ -2,8 +2,6 @@ from flask_script import Manager, Command, Server
 from flask_bootstrap import Bootstrap
 from test_app.hello_templates import app
 
-__bot_local__ = 'https://127.0.0.1:5566'
-
 
 manager = Manager(app)
 bootstrap = Bootstrap(manager.app)
